@@ -270,7 +270,7 @@ const app = new Vue({
                 this.result = 'ok';
                 localStorage.clear()
 
-                setTimeout(() => window.location.href = '/', 3000)
+                setTimeout(() => window.location.href = '/', 5000)
             });
         }
     }

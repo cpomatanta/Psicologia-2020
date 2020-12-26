@@ -16,60 +16,69 @@
 </head>
 <body>
 <div id="app">
-    <nav class="navbar mb-5" style="background-color: #004799;">
-        <a class="navbar-brand" href="#">
-            <img src="./static/logo.png" class="d-inline-block align-top" style="width: 103px;" alt="UPAO">
-        </a>
-    </nav>
+    <div class="container-fluid px-0">
+        <nav class="navbar mb-5" style="background-color: #004799;">
+            <a class="navbar-brand" href="#">
+                <img src="./static/logo.png" class="d-inline-block align-top" style="width: 103px;" alt="UPAO">
+            </a>
+        </nav>
 
-    <div v-if="result === 'ok'" class="card  m-auto" style="width: 50rem;">
-        <div class="card-body">
-            <h5>Gracias por finalizar el cuestionario.</h5>
-        </div>
-    </div>
-
-    <div v-if="result !== 'ok'" class="card  m-auto" style="width: 50rem;">
-        <div class="card-header">
-            Preguntas {{ '{{ (pagina * porPagina) + 1 }} a {{(pagina * porPagina) + porPagina}} de {{preguntas.length}}' }} </div>
-        <div class="card-body">
-            <template v-for="(i, index) of porPagina">
-                <h5 class="card-title" v-if="preguntas[(pagina * porPagina) + index]"
-                    v-bind:class="{'mt-4': index > 0}">{{ '{{ preguntas[(pagina * porPagina) + index].p }}' }}</h5>
-
-                <ul v-if="preguntas[(pagina * porPagina) + index]" class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <div class="form-check">
-                            <input v-model="preguntas[(pagina * porPagina) + index].respuesta" style="cursor: pointer"
-                                   v-bind:name="'option' + i" class="form-check-input" type="radio"
-                                   v-bind:id="'yes_option' + i" value="1">
-                            <label style="cursor: pointer" class="form-check-label" v-bind:for="'yes_option' + i">
-                                SI
-                            </label>
-                        </div>
-                    </li>
-                    <li class="list-group-item" style="border-bottom: none">
-                        <div class="form-check">
-                            <input v-model="preguntas[(pagina * porPagina) + index].respuesta" style="cursor: pointer"
-                                   v-bind:name="'option' + i" class="form-check-input" type="radio"
-                                   v-bind:id="'no_option' + i" value="0">
-                            <label style="cursor: pointer" class="form-check-label" v-bind:for="'no_option' + i">
-                                NO
-                            </label>
-                        </div>
-                    </li>
-                </ul>
-            </template>
-            <div>
-                <a href="#" class="btn mt-2 btn-primary float-left"
-                   v-if="pagina > 0" @click="anterior">Anterior</a>
-
-                <a href="#" class="btn mt-2 btn-primary float-right"
-                   v-if="(pagina * porPagina) + porPagina < preguntas.length" @click="siguiente">Siguiente</a>
-                <a href="#" class="btn mt-2 btn-primary float-right"
-                   v-if="!((pagina * porPagina) + porPagina < preguntas.length)" @click="enviar">Finalizar</a>
+        <div v-if="result == 'ok'" class="card m-auto mb-4" style="max-width: 50rem;">
+            <div class="card-body">
+                <h5>Gracias por finalizar el cuestionario.</h5>
             </div>
-
         </div>
+
+        <div v-if="result == 'ok'" class="m-auto" style="max-width: 70rem;text-align: center;margin-top:2rem !important; ">
+            <img src="./static/logo2.png" class="d-inline-block align-top" style="max-width: 20rem;" alt="UPAO">
+        </div>
+
+        <div v-if="result != 'ok'" class="card  m-auto" style="max-width: 50rem;">
+            <div class="card-header">
+                Preguntas {{ '{{ (pagina * porPagina) + 1 }} a {{(pagina * porPagina) + porPagina}} de {{preguntas.length}}' }} </div>
+            <div class="card-body">
+                <template v-for="(i, index) of porPagina">
+                    <h5 class="card-title" v-if="preguntas[(pagina * porPagina) + index]"
+                        v-bind:class="{'mt-4': index > 0}">{{ '{{ preguntas[(pagina * porPagina) + index].p }}' }}</h5>
+
+                    <ul v-if="preguntas[(pagina * porPagina) + index]" class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="form-check">
+                                <input v-model="preguntas[(pagina * porPagina) + index].respuesta"
+                                       style="cursor: pointer"
+                                       v-bind:name="'option' + i" class="form-check-input" type="radio"
+                                       v-bind:id="'yes_option' + i" value="1">
+                                <label style="cursor: pointer" class="form-check-label" v-bind:for="'yes_option' + i">
+                                    SI
+                                </label>
+                            </div>
+                        </li>
+                        <li class="list-group-item" style="border-bottom: none">
+                            <div class="form-check">
+                                <input v-model="preguntas[(pagina * porPagina) + index].respuesta"
+                                       style="cursor: pointer"
+                                       v-bind:name="'option' + i" class="form-check-input" type="radio"
+                                       v-bind:id="'no_option' + i" value="0">
+                                <label style="cursor: pointer" class="form-check-label" v-bind:for="'no_option' + i">
+                                    NO
+                                </label>
+                            </div>
+                        </li>
+                    </ul>
+                </template>
+                <div>
+                    <a href="#" class="btn mt-2 btn-primary float-left"
+                       v-if="pagina > 0" @click="anterior">Anterior</a>
+
+                    <a href="#" class="btn mt-2 btn-primary float-right"
+                       v-if="(pagina * porPagina) + porPagina < preguntas.length" @click="siguiente">Siguiente</a>
+                    <a href="#" class="btn mt-2 btn-primary float-right"
+                       v-if="!((pagina * porPagina) + porPagina < preguntas.length)" @click="enviar">Finalizar</a>
+                </div>
+
+            </div>
+        </div>
+
     </div>
 </div>
 <style>
