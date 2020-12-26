@@ -1,46 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>Document</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Preguntas</title>
+    <script>
+        var id = '{{ id }}';
+        var dni = '{{ dni }}';
+    </script>
 </head>
 <body>
-    <div id="app">
-        <h1>{{'{{ titulo }}'}}</h1>            
-                <table id="marco">
-                    <tr id="item" v-for="pregunta of preguntasMostrar" >
-                        <td>{{'{{ pregunta.p }}'}}</td>
-                        <td><input type="radio" v-model="pregunta.valor" value="0">NO</td>
-                        <td><input type="radio" v-model="pregunta.valor" value="1">SI</td>
-                    </tr>
-                </table>
-        <button @click="siguienteLote">Pagina siguiente</button>
+<div id="app">
+    <nav class="navbar mb-5" style="background-color: #004799;">
+        <a class="navbar-brand" href="#">
+            <img src="./static/logo.png" class="d-inline-block align-top" style="width: 103px;" alt="UPAO">
+        </a>
+    </nav>
+
+    <div v-if="result === 'ok'" class="card  m-auto" style="width: 50rem;">
+        <div class="card-body">
+            <h5>Gracias por finalizar el cuestionario.</h5>
+        </div>
     </div>
-    <style>
-        #si,#no{
-            width: 80px;
-            height: 100%;
-            background-color: #ccc;
-        }
-        #marco{
-            background-color: aquamarine;
-            width: 1000px;
-            height: 300px;
-        }
-        #item{
-            padding: 10px;
-            background-color: #ccc;
-            box-sizing: border-box;
-            width: 65%;
-            height: 40px;
-            border-radius: 15px;
-            border: 1px solid #000;
-        }
-    </style>
-    <script src="https://cdn.jsdelivr.net/npm/vue"></script>    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.1/axios.min.js"></script>
-    <script src="./static/script.js"></script>
+
+    <div v-if="result !== 'ok'" class="card  m-auto" style="width: 50rem;">
+        <div class="card-header">
+            Preguntas {{ '{{ (pagina * porPagina) + 1 }} a {{(pagina * porPagina) + porPagina}} de {{preguntas.length}}' }} </div>
+        <div class="card-body">
+            <template v-for="(i, index) of porPagina">
+                <h5 class="card-title" v-if="preguntas[(pagina * porPagina) + index]"
+                    v-bind:class="{'mt-4': index > 0}">{{ '{{ preguntas[(pagina * porPagina) + index].p }}' }}</h5>
+
+                <ul v-if="preguntas[(pagina * porPagina) + index]" class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <div class="form-check">
+                            <input v-model="preguntas[(pagina * porPagina) + index].respuesta" style="cursor: pointer"
+                                   v-bind:name="'option' + i" class="form-check-input" type="radio"
+                                   v-bind:id="'yes_option' + i" value="1">
+                            <label style="cursor: pointer" class="form-check-label" v-bind:for="'yes_option' + i">
+                                SI
+                            </label>
+                        </div>
+                    </li>
+                    <li class="list-group-item" style="border-bottom: none">
+                        <div class="form-check">
+                            <input v-model="preguntas[(pagina * porPagina) + index].respuesta" style="cursor: pointer"
+                                   v-bind:name="'option' + i" class="form-check-input" type="radio"
+                                   v-bind:id="'no_option' + i" value="0">
+                            <label style="cursor: pointer" class="form-check-label" v-bind:for="'no_option' + i">
+                                NO
+                            </label>
+                        </div>
+                    </li>
+                </ul>
+            </template>
+            <div>
+                <a href="#" class="btn mt-2 btn-primary float-left"
+                   v-if="pagina > 0" @click="anterior">Anterior</a>
+
+                <a href="#" class="btn mt-2 btn-primary float-right"
+                   v-if="(pagina * porPagina) + porPagina < preguntas.length" @click="siguiente">Siguiente</a>
+                <a href="#" class="btn mt-2 btn-primary float-right"
+                   v-if="!((pagina * porPagina) + porPagina < preguntas.length)" @click="enviar">Finalizar</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+<style>
+    #si, #no {
+        width: 80px;
+        height: 100%;
+        background-color: #ccc;
+    }
+
+    #marco {
+        background-color: aquamarine;
+        width: 1000px;
+        height: 300px;
+    }
+
+    #item {
+        padding: 10px;
+        background-color: #ccc;
+        box-sizing: border-box;
+        width: 65%;
+        height: 40px;
+        border-radius: 15px;
+        border: 1px solid #000;
+    }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.1/axios.min.js"></script>
+<script src="./static/script.js"></script>
 </body>
 </html>

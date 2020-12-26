@@ -1,27 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="{{ url_for('static', filename='css/main.scss.css') }}" rel="stylesheet" type="text/css">
-    <title>Document</title>
+    <title>Indentificación</title>
+    <script>
+        localStorage.clear();
+    </script>
 </head>
 <body>
-    <form action="/Paciente" method="POST">
-      <div>
-        <div>
-          <div>Nombre y Apellidos:</div>
-          <div><input type="text" name="nombre"/></div>
-        </div>
-        <div>
-          <div>DNI:</div>
-          <div><input type="text" name="dni"/></div>
-        </div>
-        <div>
-          <div><input type="submit" /></div>
-          <div></div>
-        </div>
-      </div>
-    </form>
+<nav class="navbar mb-5" style="background-color: #004799;">
+    <a class="navbar-brand" href="#">
+        <img src="./static/logo.png" class="d-inline-block align-top" style="width: 103px;" alt="UPAO">
+    </a>
+</nav>
+
+<div class="card m-auto" style="width: 25rem;">
+    <div class="card-body">
+        <form action="/paciente" method="POST">
+            <div class="form-group">
+                <label for="name">Nombre y Apellidos</label>
+                <input type="text" name="nombre" class="form-control" id="name"
+                       placeholder="Ingrese su nombre y apellidos">
+            </div>
+
+            <div class="form-group">
+                <label for="dni">DNI</label>
+                <input type="text" name="dni" class="form-control" id="dni" placeholder="Ingrese su dni">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Continuar</button>
+        </form>
+    </div>
+</div>
+
 </body>
 </html>
